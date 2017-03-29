@@ -21,7 +21,7 @@ def check_admin(wnumber):
 		input_file = open("user_list.csv", "rt") 	
 		reader = csv.reader(input_file)
 		for row in reader:
-			if (row[1] == "admin"):
+			if (row[0] == wnumber and row[1] == "admin"):
 				print("Admin found.")
 				return True
 		return False
@@ -29,7 +29,7 @@ def check_admin(wnumber):
 		print(e.args)
 		print(e)
 
-def allow_access(ID):
+def add_access(ID):
 	try:
 		input_file = open("user_list.csv", "a") 	
 		writer = csv.writer(input_file)
@@ -38,12 +38,31 @@ def allow_access(ID):
 		print(e.args)
 		print(e)
 
+def check_access(ID):
+	try:
+		input_file = open("user_list.csv", "rt") 	
+		reader = csv.reader(input_file)
+		for row in reader:
+			if (row[0] == ID and (row[1] == "admin" or row[1] == "student")):
+				print("Normally we would disengage the lock here.")
+				print("Access granted.")
+				break
+	except Exception as e:
+		print(e.args)
+		print(e)
+
 def main(argv):
-	card_input = input("Reading card now..\n")
-	print("Passing in input.. " + card_input)
-	if (check_admin(extract_wnumber(card_input))):
-		new_user = input("Please enter new user info\n")
-		allow_access(extract_wnumber(new_user))
+	while(1):		
+		card_input = input("Reading card now..\n")
+		print("Passing in input.. " + card_input)
+		w_number = extract_wnumber(card_input)
+		if (check_admin(w_number)):
+			new_user = input("Please enter new user info\n")
+			new_w_number = extract_wnumber(new_user)
+			add_access(new_w_number)
+			check_access(new_w_number)
+		else:
+			check_access(w_number)
 
 if __name__ == "__main__":
 	main(sys.argv)
