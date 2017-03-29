@@ -15,7 +15,6 @@ def extract_wnumber(ID):
 	else:
 		print("Couldn't extract W number. We were given " + ID)
 
-
 def check_admin(wnumber):
 	with open("user_list.csv", "rt") as input_file:
 		try:
@@ -33,7 +32,7 @@ def add_access(ID):
 	with open("user_list.csv", "rt") as input_file:
 		try:	
 			writer = csv.writer(input_file)
-			writer.writerow( (ID, "student") )
+			writer.writerow((ID, "student"))
 		except Exception as e:
 			print(e.args)
 			print(e)
@@ -58,11 +57,9 @@ def main(argv):
 		w_number = extract_wnumber(card_input)
 		if (check_admin(w_number)):
 			new_user = input("Please enter new user info\n")
-			new_w_number = extract_wnumber(new_user)
-			add_access(new_w_number)
-			check_access(new_w_number)
-		else:
-			check_access(w_number)
+			w_number = extract_wnumber(new_user)
+			add_access(w_number)
+		check_access(w_number)
 
 if __name__ == "__main__":
 	main(sys.argv)
