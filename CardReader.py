@@ -17,39 +17,39 @@ def extract_wnumber(ID):
 
 
 def check_admin(wnumber):
-	try:
-		input_file = open("user_list.csv", "rt") 	
-		reader = csv.reader(input_file)
-		for row in reader:
-			if (row[0] == wnumber and row[1] == "admin"):
-				print("Admin found.")
-				return True
-		return False
-	except Exception as e:
-		print(e.args)
-		print(e)
+	with open("user_list.csv", "rt") as input_file:
+		try:
+			reader = csv.reader(input_file)
+			for row in reader:
+				if (row[0] == wnumber and row[1] == "admin"):
+					print("Admin found.")
+					return True
+			return False
+		except Exception as e:
+			print(e.args)
+			print(e)
 
 def add_access(ID):
-	try:
-		input_file = open("user_list.csv", "a") 	
-		writer = csv.writer(input_file)
-		writer.writerow( (ID, "student") )
-	except Exception as e:
-		print(e.args)
-		print(e)
+	with open("user_list.csv", "rt") as input_file:
+		try:	
+			writer = csv.writer(input_file)
+			writer.writerow( (ID, "student") )
+		except Exception as e:
+			print(e.args)
+			print(e)
 
 def check_access(ID):
-	try:
-		input_file = open("user_list.csv", "rt") 	
-		reader = csv.reader(input_file)
-		for row in reader:
-			if (row[0] == ID and (row[1] == "admin" or row[1] == "student")):
-				print("Normally we would disengage the lock here.")
-				print("Access granted.")
-				break
-	except Exception as e:
-		print(e.args)
-		print(e)
+	with open("user_list.csv", "rt") as input_file:
+		try:	
+			reader = csv.reader(input_file)
+			for row in reader:
+				if (row[0] == ID and (row[1] == "admin" or row[1] == "student")):
+					print("Normally we would disengage the lock here.")
+					print("Access granted.")
+					break
+		except Exception as e:
+			print(e.args)
+			print(e)
 
 def main(argv):
 	while(1):		
